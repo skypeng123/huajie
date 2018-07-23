@@ -1,0 +1,42 @@
+<?=$header?>
+
+		<div class="banner">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>company/profile" <?php if($action == 'profile'):?> class="actived"<?php endif;?>>集团概况 </a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>company/culture" <?php if($action == 'culture'):?> class="actived"<?php endif;?>>企业文化</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>company/structure" <?php if($action == 'structure'):?> class="actived"<?php endif;?>>组织架构</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>company/honor" <?php if($action == 'honor'):?> class="actived"<?php endif;?>>荣誉资质</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>company/business" <?php if($action == 'business'):?> class="actived"<?php endif;?>>业务范围</a>
+					</li>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">关于华杰建设集团</h2>
+						<p class="f12 pr cW">About of Hua Jie Construction Group</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<article class="index-content">
+			<div class="wrapper">
+			   <div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg"/> 首页 > 关于华杰建设集团 > <b><?=$info['title']?></b></div>
+			</div>
+			<?=$info['content']?>
+			<?=$footer?>
+		</article>
+		
+	</body>
+
+</html>

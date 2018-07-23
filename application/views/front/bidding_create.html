@@ -1,0 +1,187 @@
+<?=$header?>
+<link href="<?php echo $statics_url ?>assets/global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css" />
+		<div class="banner banner-5">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>"><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+					<?php if($rid == 2 || $rid == 1):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/create" class="actived">发布招标信息</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/search">搜索供应商</a>
+					</li>
+					<?php endif;?>
+					<?php if($uid && $rid == 3):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/my">我的投标</a>
+					</li>
+					<?php endif;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">项目招标</h2>
+						<p class="f12 pr cW">BIDDING</p>
+						<?php if(!empty($uid)):?>
+						<div  class="cW f16">
+							<img src="<?php echo $statics_url ?>front/img/header.jpg" width="50" height="50" style="border-radius: 50px;" /> <?=$username?>,你已登录华杰集团招标系统
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a>> <a href="<?=$site_url?>bidding">项目招标</a> > <b>发布招标详情</b></div>
+			</div>
+			<section>
+				<div class="wrapper">
+
+					<div class="pb60 pt60">
+						<form class="layui-form" action="">
+							<div class="layui-form-item ">
+								<label class="layui-form-label">标题</label>
+								<div class="layui-input-block">
+									<input type="text" name="title" required lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">类型</label>
+								<div class="layui-input-block">
+									<?php foreach($category_list as $key=>$cat):?>
+									<input type="radio" name="catid" required value="<?=$cat['id']?>" title="<?=$cat['name']?>" <?php if($key == 0):?>checked=""<?php endif?>>
+									<?php endforeach;?>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">开始时间</label>
+								<div class="layui-input-block">
+									<input type="text" name="start_date" id="start_date" required lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">结束时间</label>
+								<div class="layui-input-block">
+									<input type="text" name="end_date" id="end_date" required lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item layui-form-text">
+								<label class="layui-form-label">招标详情</label>
+								<div class="layui-input-block">
+									<script id="content" name="content" type="text/plain">
+
+									</script>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">上传标书</label>
+								<div class="layui-input-inline" style="width: 350px;">
+									<input type="text" id="filename" name="filename" required  lay-verify="required" autocomplete="off" placeholder="标书文件" class="layui-input">
+									<input type="hidden" id="fileurl" name="fileurl" />
+								</div>
+								<button type="button" class="layui-btn" id="bidding_file">
+									上传文件
+								</button>
+								(大小限制：10M，格式：doc;docx;pdf;rar;zip)
+
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-input-block tc">
+									<button class="layui-btn layui-btn-normal layui-btn-lg" lay-submit="" lay-filter="createFrom">立即发布</button>
+									<button type="reset" class="layui-btn layui-btn-primary layui-btn-lg">重置</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+		<!-- 配置文件 -->
+		<script type="text/javascript" src="<?php echo $statics_url ?>ueditor/ueditor.config.js"></script>
+		<!-- 编辑器源码文件 -->
+		<script type="text/javascript" src="<?php echo $statics_url ?>ueditor/ueditor.all.js"></script>
+		
+		<script>
+            layui.use(['form', 'layedit', 'upload', 'laydate'], function() {
+                var $ = layui.$ ,
+					form = layui.form,
+                    layer = layui.layer,
+                    layedit = layui.layedit,
+                    laydate = layui.laydate;
+
+
+                //日期
+                laydate.render({
+                    elem: '#start_date'
+                });
+                laydate.render({
+                    elem: '#end_date'
+                });
+                //编辑器
+                var ue = UE.getEditor('content',{
+                    toolbars: [
+                        ['fullscreen', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc','|','simpleupload','insertimage','|','source']
+                    ],
+                    autoHeightEnabled: true,
+                    autoFloatEnabled: true,
+                    initialFrameHeight: 400,
+                    serverUrl:site_url+"ueditor/controller.php"
+                });
+                //上传
+                var upload = layui.upload;
+                var uploadInst = upload.render({
+                    elem: '#bidding_file',
+                    field:'bidding_file',
+                    url: site_url+'bidding/upload',
+                    accept: 'file',
+                    exts: 'zip|rar|7z|doc|docx|pdf',
+                    size: 10240,
+                    done: function(res, index, upload) {
+                        $("#filename").val(res.data.filename);
+                        $("#fileurl").val(res.data.src);
+                    },
+					error: function(res){
+						//请求异常回调
+						alert('文件上传失败');
+					}
+                });
+
+                //监听提交
+                form.on('submit(createFrom)', function(data) {
+                    req_data = data.field;
+                    req_data.content = ue.getContent();
+                    $.ajax({
+                        "url":site_url+"bidding/save",
+                        "data":req_data,
+                        "dataType":"json",
+                        "type":"POST",
+                        "success":function (rdata) {
+                            //console.log(rdata);
+                            if(rdata.code == 200){
+                                alert('招标发布成功.');
+                                window.location.href = rdata.data.url
+                            }else{
+                                alert(rdata.msg);
+                            }
+                        },
+                        "error":function(res){
+                            //console.log(res);
+                            alert('招标发布失败.');
+                        }
+                    });
+                    return false;
+                });
+            });
+		</script>
+	</body>
+
+</html>

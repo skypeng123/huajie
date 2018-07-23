@@ -1,0 +1,158 @@
+<?=$header?>
+
+		<div class="banner banner-5">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>"><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+					<?php if($rid == 2 || $rid == 1):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/create">发布招标信息</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/search" class="actived">搜索供应商</a>
+					</li>
+					<?php endif;?>
+					<?php if($uid && $rid == 3):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/my">我的投标</a>
+					</li>
+					<?php endif;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">项目招标</h2>
+						<p class="f12 pr cW">BIDDING</p>
+						<?php if(!empty($uid)):?>
+						<div  class="cW f16">
+							<img src="<?php echo $statics_url ?>front/img/header.jpg" width="50" height="50" style="border-radius: 50px;" /> <?=$username?>,你已登录华杰集团招标系统
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a>> <a href="<?=$site_url?>bidding">项目招标</a> > <b>搜索供应商</b></div>
+			</div>
+			<section>
+				<div class="wrapper">
+
+					<div class="layui-form-item pt30" style="max-width:380px;margin: 0 auto">
+						<form class="layui-form">
+							<label class="layui-form-label">供应商</label>
+							<div class="layui-input-inline">
+								<input type="text" name="title" lay-verify="title" autocomplete="off" value="<?php if(!empty($keyword)) echo $keyword ?>" placeholder="供应商名称" class="layui-input">
+							</div>
+
+							<button class="layui-btn layui-btn-normal">搜索</button>
+						</form>
+
+					</div>
+
+					<div class="layui-form pt10">
+						<table class="layui-table">
+							<colgroup>
+								<col width="25%">
+								<col width="25%">
+								<col width="25%">
+								<col>
+
+							</colgroup>
+							<thead>
+							<tr>
+								<th>公司名称</th>
+								<th>投标项目</th>
+								<th>申请时间</th>
+								<th>申请资料</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php foreach($bidding_submit as $row):?>
+							<tr>
+								<td><?=$row['company_name']?></td>
+								<td><?=$row['bidding_name']?></td>
+								<td><?=date('Y-m-d',$row['addtime'])?></td>
+								<td><a href="javascript: ;" item-data='<?=$row["json"]?>' class="cB toubiao">查看详情</a></td>
+							</tr>
+							<?php endforeach;?>
+							</tbody>
+						</table>
+						<div id="page_html" class="tc pt20 pb60"></div>
+					</div>
+
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+		<div id="dom" class="p20 lh250" style="display: none;">
+			<ul  class="layui-row f16">
+				<li class="layui-col-xs3 layui-col-md1">公司名称</li>
+				<li class="layui-col-xs9 layui-col-md11 company_name"></li>
+				<li  class="layui-col-xs3 layui-col-md1">投标项目</li>
+				<li  class="layui-col-xs9 layui-col-md11 bidding_name"></li>
+				<li  class="layui-col-xs3 layui-col-md1">联系人</li>
+				<li  class="layui-col-xs9 layui-col-md11 contact"></li>
+				<li  class="layui-col-xs3 layui-col-md1">手机号码</li>
+				<li class="layui-col-xs9 layui-col-md11 mobile"></li>
+				<li class="layui-col-xs3 layui-col-md1">投标书</li>
+				<li class="layui-col-xs9 layui-col-md11 bidding_file"></li>
+				<li class="layui-col-xs3 layui-col-md1">备注</li>
+				<li class="layui-col-xs9 layui-col-md11 remark"></li>
+			</ul>
+		</div>
+	
+		<script>
+            layui.use('laypage', function() {
+                var laypage = layui.laypage;
+                //执行一个laypage实例
+                laypage.render({
+                    elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+                    ,count: <?=$page_info['total_rows']?>
+                	,curr: <?=$page_info['page_index']?>
+                	,jump: function(obj, first){
+						if(!first){
+							url = window.location.href;
+							if(url.indexOf("page=") != -1){
+								url = url.replace(/page=[0-9]/g,"page="+obj.curr);
+							}else{
+								url = url.indexOf("?") != -1 ? url+"&page="+obj.curr : url+"?page="+obj.curr;
+							}
+							window.location.href=url;
+						}
+                	}
+            	});
+            });
+            layui.use(['layer','form'], function() {
+                var $ = layui.$ ,
+                    form = layui.form,
+                    layer = layui.layer;
+
+                $('.toubiao').on('click', function(){
+                    info = $(this).attr('item-data');
+                    data = $.parseJSON(info);
+                    $('.company_name').html(data.company_name);
+                    $('.bidding_name').html(data.bidding_name);
+                    $('.contact').html(data.contact);
+                    $('.mobile').html(data.mobile);
+                    $('.bidding_file').html('<a href="'+data.fileurl+'" class="cB"><i class="layui-icon layui-icon-download-circle"></i>'+data.filename+'</a>');
+                    $('.remark').html(data.remark);
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        area :'90%',
+                        content: $('#dom') //这里content是一个普通的String
+                    });
+                });
+            });
+		</script>
+	</body>
+
+</html>

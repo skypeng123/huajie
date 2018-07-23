@@ -1,0 +1,105 @@
+<?=$header?>
+
+		<div class="banner banner-2">
+			<div class="wrapper pr">
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">参建项目</h2>
+						<p class="f12 pr cW">PROJECT GALLERY</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <a href="<?=$site_url?>project"><b>参建项目</b></a></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="title-about pt60"><?=$info['title']?></h2>
+					<p class="tc pt30">-<?=$info['catname']?>-</p>
+					<div class="pt60 pb60">
+						<div class="layui-row">
+							<div class="layui-col-xs12 layui-col-md7">
+								<p class="pro-view">
+									<?=$info['content']?>
+								</p>
+							</div>
+							<div class="layui-col-xs12 layui-col-md5">
+								<div class="layui-carousel" id="test2">
+									<div carousel-item>
+										<?php foreach($info['pic'] as $pic): ?>
+										<div style="background-image: url(<?=$pic?>);" class="pr">
+
+										</div>
+										<?php endforeach;?>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="tc pt60">
+							<a class="pro-view-btn" <?php if(!empty($prev_record)): ?>href="<?=$prev_record['url']?>"<?php endif;?>><i class="layui-icon layui-icon-prev">	</i></a>
+							<a class="pro-view-btn" <?php if(!empty($next_record)): ?>href="<?=$next_record['url']?>"<?php endif;?>><i class="layui-icon layui-icon-next">	</i></a>
+
+						</div>
+					</div>
+
+				</div>
+
+			</section>
+
+			<section class="bg-eee">
+				<div class="wrapper">
+					<h2 class="title-about pt60">推荐项目</h2>
+
+					<div class="pt60 pb60">
+
+						<ul class="layui-row  pro-list layui-col-space10">
+							<?php foreach($project_list as $pro):?>
+							<li class="layui-col-xs12 layui-col-md3">
+								<a href="<?=$pro['url']?>">
+									<div class="pro-ul">
+										<div class="pro-div">
+											<div class="p20">
+												<h2 class="cW tc f20 text-ovflow"><?=$pro['title']?></h2>
+												<p class="cW tc pt10 text-ovflow">-<?=$pro['catname']?>-</p>
+												<p class="cW lh180 pt20 pro-txt"><?=$pro['desc']?></p>
+											</div>
+											<i><img lay-src="<?=$statics_url?>front/img/ico-6.png"/></i>
+										</div>
+										<img lay-src="<?php if(!empty($pro['pic'][0])):?><?=$pro['pic'][0]?><?php endif;?>" width="100%" />
+									</div>
+								</a>
+							</li>
+							<?php endforeach?>
+						</ul>
+					</div>
+				</div>
+
+			</section>
+
+			<?=$footer?>
+		</article>
+		
+		<script>
+            layui.use('carousel',function() {
+                var carousel = layui.carousel;
+                //建造实例
+                carousel.render({
+                    elem: '#test2',
+                    width: '450' //设置容器宽度
+                    ,
+                    arrow: 'always' //始终显示箭头
+                    ,
+                    height: '337',
+                    indicator: 'none'
+                    //,anim: 'updown' //切换动画方式
+                });
+            });
+		</script>
+	</body>
+
+</html>

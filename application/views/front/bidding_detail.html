@@ -1,0 +1,273 @@
+<?=$header?>
+
+		<div class="banner banner-5">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>" <?php if($cat['id'] == $curr_cat['id']):?>class="actived"<?php endif;?>><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+					<?php if($rid == 2 || $rid == 1):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/create">发布招标信息</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/search">搜索供应商</a>
+					</li>
+					<?php endif;?>
+					<?php if($uid && $rid == 3):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/my">我的投标</a>
+					</li>
+					<?php endif;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">项目招标</h2>
+						<p class="f12 pr cW">BIDDING</p>
+						<?php if(!empty($uid)):?>
+						<div  class="cW f16">
+							<img src="<?php echo $statics_url ?>front/img/header.jpg" width="50" height="50" style="border-radius: 50px;" /> <?=$username?>,你已登录华杰集团招标系统
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a>> <a href="<?=$site_url?>bidding">项目招标</a> > <b><?=$curr_cat['name']?></b></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="f24 tb tc pt60"><?=$info['title']?></h2>
+					<p class="pt30 tc zhaobiao-time"><span>投标开始：<?=$info['start_date']?></span><span> 投标截止：<?=$info['end_date']?></span></p>
+					<div class="pt60 pb60 ">
+
+						<p class="f16 lh180"> <?=$info['content']?>
+						</p>
+						<?php if($info['fileurl']):?>
+						<p class="pt30 f16">标书下载：<a href="<?=$info['fileurl']?>" class="cB"><i class="layui-icon layui-icon-download-circle"></i>
+							<?=$info['filename']?></a></p>
+						<?php endif; ?>
+					</div>
+					<div class="tc pb60">
+						<?php if(($rid == 1 || $rid == 2) && $uid): ?>
+						<a href="<?=$site_url?>bidding/edit/<?=$info['id']?>" class="btn-zb">编辑投标详情</a>
+						<?php elseif($uid && $my_submit): ?>
+						<a href="javascript:;" class="btn-zb toubiao1">重新投标</a>
+						<?php elseif(!in_array($rid,array(1,2))): ?>
+						<a href="javascript:;" class="btn-zb toubiao1">我要投标</a>
+						<?php endif;?>
+
+					</div>
+				</div>
+			</section>
+			<?php if($rid == 1 || $rid == 2): ?>
+			<section class="bg-eee">
+				<div class="wrapper">
+					<h2 class="f24 tb tc pt60">参与投标的供应商</h2>
+					<div class="layui-form pt30">
+						<table class="layui-table">
+							<colgroup>
+								<col width="33%">
+								<col width="33%">
+								<col>
+							</colgroup>
+							<thead>
+							<tr>
+								<th>公司名称</th>
+								<th>申请时间</th>
+								<th>申请资料</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php foreach($bidding_submit as $row):?>
+							<tr>
+								<td><?=$row['company_name']?></td>
+								<td><?=date('Y-m-d',$row['addtime'])?></td>
+								<td><a href="javascript: ;" item-data='<?=$row["json"]?>' class="cB toubiao">查看详情</a></td>
+							</tr>
+							<?php endforeach;?>
+							</tbody>
+						</table>
+						<div id="page_html" class="tc pt20 pb60"></div>
+					</div>
+
+				</div>
+			</section>
+			<?php endif; ?>
+			<?=$footer?>
+		</article>
+		<div id="dom" class="p20 lh250" style="display: none;">
+			<ul  class="layui-row f16">
+				<li class="layui-col-xs3 layui-col-md1">公司名称</li>
+				<li class="layui-col-xs9 layui-col-md11 company_name">动雪科技有限公司</li>
+				<li  class="layui-col-xs3 layui-col-md1">联系人</li>
+				<li  class="layui-col-xs9 layui-col-md11 contact">叶宝芳</li>
+				<li  class="layui-col-xs3 layui-col-md1">手机号码</li>
+				<li class="layui-col-xs9 layui-col-md11 mobile">13510943945</li>
+				<li class="layui-col-xs3 layui-col-md1">投标书</li>
+				<li class="layui-col-xs9 layui-col-md11 bidding_file"></li>
+				<li class="layui-col-xs3 layui-col-md1">备注</li>
+				<li class="layui-col-xs9 layui-col-md11 remark">为三幢六栋34层现浇框剪结构住宅楼，建筑高度99.9m，总用地面积为13199.69m2,项目总建筑面积93888.86m2。设二层地下室，地下室基坑开挖面积为13908m2,开挖深度为9.34m，地下室建筑面积为21256.02m2,本项目无商业及餐饮用途面积。</li>
+			</ul>
+		</div>
+		<div id="dom1" class="p20" style="display: none;">
+			<form class="layui-form" action="">
+				<div class="layui-form-item ">
+					<label class="layui-form-label">公司名称</label>
+					<div class="layui-input-block">
+						<input type="text" required name="company_name" value="<?php if(!empty($my_submit)) echo $my_submit['company_name'];?>" lay-verify="required|title" autocomplete="off" placeholder="请输入您的公司名称" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item ">
+					<label class="layui-form-label">联系人</label>
+					<div class="layui-input-block">
+						<input type="text" required name="contact" value="<?php if(!empty($my_submit)) echo $my_submit['contact'];?>" lay-verify="required|title" autocomplete="off" placeholder="请输入联系人姓名" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">手机号码</label>
+					<div class="layui-input-block">
+						<input type="tel" required name="mobile" value="<?php if(!empty($my_submit)) echo $my_submit['mobile'];?>" lay-verify="required|phone" placeholder="请输入联系人手机号码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">上传标书</label>
+					<div class="layui-input-inline" style="width: 350px;">
+						<input type="text" id="filename" name="filename" value="<?php if(!empty($my_submit)) echo $my_submit['filename'];?>"  lay-verify="required" autocomplete="off" placeholder="标书文件" class="layui-input">
+						<input type="hidden" id="fileurl" name="fileurl" value="<?php if(!empty($my_submit)) echo $my_submit['fileurl'];?>" />
+					</div>
+					<button type="button" class="layui-btn" id="bidding_file">
+						上传文件
+					</button>
+					(大小限制：10M，格式：doc;docx;pdf;rar;zip)
+
+				</div>
+
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">投标备注</label>
+					<div class="layui-input-block">
+						<textarea name="remark" placeholder="我想说点什么" class="layui-textarea"><?php if(!empty($my_submit)) echo $my_submit['remark'];?></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block tc">
+						<input type="hidden" name="bidding_id" value="<?=$info['id']?>">
+						<input type="hidden" name="id" value="<?php if(!empty($my_submit)) echo $my_submit['id'];?>">
+						<button class="layui-btn layui-btn-normal layui-btn-lg" lay-submit="" lay-filter="submitFrom">立即提交</button>
+
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<script>
+            layui.use('laypage', function() {
+                var laypage = layui.laypage;
+                //执行一个laypage实例
+                laypage.render({
+                    elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+                    ,count: <?=$page_info['total_rows']?>
+					,curr: <?=$page_info['page_index']?>
+					,jump: function(obj, first){
+							if(!first){
+								url = window.location.href;
+								if(url.indexOf("page/") != -1){
+									url = url.replace(/page\/[0-9]/g,"page/"+obj.curr);
+								}else{
+									url = url+"/page/"+obj.curr;
+								}
+								window.location.href=url;
+							}
+						}
+            	});
+            });
+            layui.use(['layer','form'], function() {
+                var $ = layui.$ ,
+                    form = layui.form,
+                    layer = layui.layer;
+
+                $('.toubiao').on('click', function(){
+					info = $(this).attr('item-data');
+					data = $.parseJSON(info);
+					$('.company_name').html(data.company_name);
+                    $('.contact').html(data.contact);
+                    $('.mobile').html(data.mobile);
+                    $('.bidding_file').html('<a href="'+data.fileurl+'" class="cB"><i class="layui-icon layui-icon-download-circle"></i>'+data.filename+'</a>');
+                    $('.remark').html(data.remark);
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        area :'90%',
+                        content: $('#dom') //这里content是一个普通的String
+                    });
+                });
+            });
+            layui.use(['layer','form','upload', 'layedit'], function() {
+                var $ = layui.$ ,
+                    form = layui.form,
+                    layer = layui.layer;
+
+                $('.toubiao1').on('click', function(){
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        area :'90%',
+                        content: $('#dom1') //这里content是一个普通的String
+                    });
+                });
+
+                //上传
+                var upload = layui.upload;
+                var uploadInst = upload.render({
+                    elem: '#bidding_file',
+                    field:'bidding_file',
+                    url: site_url+'bidding/upload',
+                    accept: 'file',
+                    exts: 'zip|rar|7z|doc|docx|pdf',
+                    size: 10240,
+                    done: function(res, index, upload) {
+                        $("#filename").val(res.data.filename);
+                        $("#fileurl").val(res.data.src);
+                    },
+                    error: function(res){
+                        //请求异常回调
+                        alert('文件上传失败');
+                    }
+                });
+
+                //监听提交
+                form.on('submit(submitFrom)', function(data) {
+                    req_data = data.field;
+                    $.ajax({
+                        "url":site_url+"bidding/submit",
+                        "data":req_data,
+                        "dataType":"json",
+                        "type":"POST",
+                        "success":function (rdata) {
+                            //console.log(rdata);
+                            if(rdata.code == 200){
+                                alert('投标发布成功.');
+                                //window.location.reload();
+                                window.location.href = site_url+'bidding/my';
+                            }else{
+                                alert(rdata.msg);
+                            }
+                        },
+                        "error":function(res){
+                            //console.log(res);
+                            alert('投标发布失败.');
+                        }
+                    });
+                    return false;
+                });
+            });
+
+		</script>
+	</body>
+</html>

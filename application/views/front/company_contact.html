@@ -1,0 +1,97 @@
+<?=$header?>
+
+		<div class="banner banner-4">
+			<div class="wrapper pr">
+
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">联系我们</h2>
+						<p class="f12 pr cW">CONTACT US</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <b>联系我们</b></div>
+			</div>
+			<?=$info['content']?>
+
+			<section class="bg-eee">
+				<div class="wrapper">
+					<h2 class="title-about pt60">在线留言</h2>
+					<div class="pb60 pt60">
+						<form class="layui-form" method="post">
+							<div class="layui-form-item ">
+								<label class="layui-form-label">姓名</label>
+								<div class="layui-input-block">
+									<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">手机号码</label>
+								<div class="layui-input-block">
+									<input type="tel" name="mobile" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">联系邮箱</label>
+								<div class="layui-input-block">
+									<input type="text" name="email" lay-verify="email" placeholder="请输入联系邮箱" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item layui-form-text">
+								<label class="layui-form-label">留言内容</label>
+								<div class="layui-input-block">
+									<textarea name="content" placeholder="我想说点什么" class="layui-textarea"></textarea>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-input-block tc">
+									<button class="layui-btn layui-btn-normal layui-btn-lg" lay-submit="" lay-filter="demo1">立即提交</button>
+									<button type="reset" class="layui-btn layui-btn-primary layui-btn-lg">重置</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+
+		<script>
+            layui.use('form', function(){
+                var $ = layui.$ ,
+                    form = layui.form;
+
+                form.on('submit(demo1)', function(data){
+                    $.ajax({
+                        "url":site_url+"company/submitFeedback",
+                        "data":data.field,
+                        "dataType":"json",
+                        "type":"POST",
+                        "success":function (rdata) {
+                            //console.log(rdata);
+                            if(rdata.code == 200){
+                                alert('留言提交成功.');
+                                window.location.reload();
+                            }else{
+                                alert(rdata.msg);
+                            }
+                        },
+                        "error":function(res){
+                            //console.log(res);
+                            alert('留言提交失败.');
+                        }
+                    });
+                    return false;
+                });
+            });
+
+		</script>
+	</body>
+</html>

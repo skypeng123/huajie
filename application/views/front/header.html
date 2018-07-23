@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title><?php if(!empty($page_title)):?><?=$page_title?> - <?php endif; ?>深圳市华杰建设集团有限公司</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="blank" />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="stylesheet" type="text/css" href="<?=$statics_url?>front/layui/css/layui.css">
+		<link rel="stylesheet" type="text/css" href="<?=$statics_url?>front/css/base.css">
+		<!--[if lt IE 9]>
+	　　<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+	 　 <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript">var site_url = '<?=$site_url?>';var statics_url = '<?=$statics_url?>';</script>
+	</head>
+
+	<body>
+		<div class="nav">
+			<div class="wrapper pr">
+				<a class="logo"><img src="<?=$statics_url?>front/img/logo.jpg" /></a>
+				<ul>
+					<li>
+						<a href="<?=$site_url?>" <?php if($module == 'index'):?> class="actived"<?php endif;?>>首页</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>company" <?php if($module == 'company' && $action!='contact'):?> class="actived"<?php endif;?>>集团概况</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>project" <?php if($module == 'project'):?> class="actived"<?php endif;?>>参建项目</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>news" <?php if($module == 'news'):?> class="actived"<?php endif;?>>新闻中心</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>job" <?php if($module == 'job'):?> class="actived"<?php endif;?>>诚聘英才</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>bidding" <?php if($module == 'bidding'):?> class="actived"<?php endif;?>>项目招标</a>
+					</li>
+					<li>
+						<a href="<?=$site_url?>company/contact" <?php if($module == 'company' && $action=='contact'):?> class="actived"<?php endif;?>>联系我们</a>
+					</li>
+				</ul>
+				<i class="layui-icon layui-icon-spread-left"></i>
+			</div>
+		</div>

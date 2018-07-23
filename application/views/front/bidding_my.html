@@ -1,0 +1,93 @@
+<?=$header?>
+
+		<div class="banner banner-5">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>"><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+					<?php if($rid == 2 || $rid == 1):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/create">发布招标信息</a>
+					</li>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/search">搜索供应商</a>
+					</li>
+					<?php endif;?>
+					<?php if($uid && $rid == 3):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$site_url?>bidding/my" class="actived">我的投标</a>
+					</li>
+					<?php endif;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">项目招标</h2>
+						<p class="f12 pr cW">BIDDING</p>
+						<?php if(!empty($uid)):?>
+						<div  class="cW f16">
+							<img src="<?php echo $statics_url ?>front/img/header.jpg" width="50" height="50" style="border-radius: 50px;" /> <?=$username?>,你已登录华杰集团招标系统
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a>> <a href="<?=$site_url?>bidding">项目招标</a> > <b>我的招标</b></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="title-about pt60">我的招标</h2>
+					<div class="pt60 pb60">
+						<div class="layui-row zhaobiao">
+							<?php foreach($bidding_list as $key=>$row):?>
+							<div class="layui-col-md5 pb30 <?php if($key%2!=0):?>layui-col-md-offset2<?php endif; ?>">
+								<div class="p20 box-shadow">
+									<a href="<?=$row['url']?>"><h2 class="f16 tb"><?=$row['title']?></h2></a>
+									<p class="pt10 c6">申请时间：<?=$row['start_date']?>    结束时间：<?=$row['end_date']?>  </p>
+									<p class="pt10 c9"><?=$row['desc']?></p>
+								</div>
+							</div>
+
+							<?php endforeach; ?>
+
+						</div>
+						<div id="page_html" class="tc pt20"></div>
+					</div>
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+	
+		<script>
+			layui.use('laypage', function() {
+				var laypage = layui.laypage;
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+					,count: <?=$page_info['total_rows']?>
+                    ,curr: <?=$page_info['page_index']?>
+                    ,jump: function(obj, first){
+                    	if(!first){
+							url = window.location.href;
+                            if(url.indexOf("page=") != -1){
+                                url = url.replace(/page=[0-9]/g,"page="+obj.curr);
+                            }else{
+                                url = url.indexOf("?") != -1 ? url+"&page="+obj.curr : url+"?page="+obj.curr;
+                            }
+							window.location.href=url;
+						}
+                	}
+				});
+			});
+		</script>
+	</body>
+
+</html>

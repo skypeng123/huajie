@@ -1,0 +1,81 @@
+<?=$header?>
+
+		<div class="banner banner-2">
+			<div class="wrapper pr">
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">参建项目</h2>
+						<p class="f12 pr cW">PROJECT GALLERY</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <a href="<?=$site_url?>project"><b>参建项目</b></a></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="title-about pt60">参建项目</h2>
+					<div class="pt60 pb60">
+						<?php if(empty($project_list)):?>
+							<div class="tc"><img src="<?=$statics_url?>front/img/nodata.png"></div>
+						<?php endif; ?>
+						<ul class="layui-row pt60 data-list pro-list layui-col-space10">
+							<?php foreach($project_list as $pro):?>
+							<li class="layui-col-xs12 layui-col-md3">
+								<a href="<?=$pro['url']?>">
+								<div class="pro-ul">
+									<div class="pro-div">
+										<div class="p20">
+											<h2 class="cW tc f20 text-ovflow"><?=$pro['title']?></h2>
+											<p class="cW tc pt10 text-ovflow">-<?=$pro['catname']?>-</p>
+											<p class="cW lh180 pt20 pro-txt"><?=$pro['desc']?></p>
+										</div>
+										<i><img src="<?=$statics_url?>front/img/ico-6.png"/></i>
+									</div>
+									<img src="<?=$statics_url?>front/img/nopic.jpg" lay-src="<?=$pro['pic'][0]?>" width="100%" />
+								</div>
+								</a>
+							</li>
+							<?php endforeach?>
+						</ul>
+						<div id="page_html" class="tc pt20"></div>
+
+					</div>
+					
+				</div>
+
+			</section>
+
+			<?=$footer?>
+		</article>
+	
+		<script>
+			layui.use('laypage', function() {
+				var laypage = layui.laypage;
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+					,count: <?=$page_info['total_rows']?>
+                    ,curr: <?=$page_info['page_index']?>
+                    ,jump: function(obj, first){
+                    	if(!first){
+							url = window.location.href;
+                            if(url.indexOf("page/") != -1){
+                                url = url.replace(/page\/[0-9]/g,"page/"+obj.curr);
+                            }else{
+                                url = url+"/page/"+obj.curr;
+                            }
+
+							window.location.href=url;
+						}
+                	}
+				});
+			});
+		</script>
+	</body>
+
+</html>

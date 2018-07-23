@@ -1,0 +1,87 @@
+<?=$header?>
+
+		<div class="banner banner-3">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>" <?php if($cat['id'] == $curr_cat['id']):?>class="actived"<?php endif;?>><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">新闻中心</h2>
+						<p class="f12 pr cW">NEWS</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <a href="<?=$site_url?>news"> 新闻中心</a> > <a href="<?=$curr_cat['url']?>"><b><?=$curr_cat['name']?></b></a></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="title-about pt60"><?=$curr_cat['name']?></h2>
+					<div class="pt60 pb60">
+						<?php if(empty($news_list)):?>
+							<div class="tc"><img src="<?=$statics_url?>front/img/nodata.png"></div>
+						<?php endif; ?>
+						<ul class="layui-row  data-list layui-col-space20">
+							<?php foreach($news_list as $news):?>
+							<li class="layui-col-xs12 layui-col-md4">
+								<a href="<?=$news['url']?>" >
+									<img src="<?=$statics_url?>front/img/nopic.jpg" lay-src="<?=$news['pic']?>" width="100%"/>
+									<div class="pt10 pb10">
+										<div class="new-date fl">
+											<div class="parent tc">
+												<p class="f36 lh100"><?=date('d',$news['addtime'])?></p>
+												<p class="f12 c9"><?=date('Y-m',$news['addtime'])?></p>
+											</div>
+										</div>
+										<div class="new-text">
+											<h3><?=$news['title']?></h3>
+											<p><?=$news['desc']?></p>
+										</div>
+									</div>
+								</a>
+							</li>
+							<?php endforeach;?>
+
+						</ul>
+						<div id="page_html" class="tc pt20"></div>
+					</div>
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+		
+		<script>
+			layui.use('laypage', function() {
+				var laypage = layui.laypage;
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+					,count: <?=$page_info['total_rows']?>
+                    ,curr: <?=$page_info['page_index']?>
+                    ,jump: function(obj, first){
+                    	if(!first){
+							url = window.location.href;
+                            if(url.indexOf("page/") != -1){
+                                url = url.replace(/page\/[0-9]/g,"page/"+obj.curr);
+                            }else{
+                                url = url+"/page/"+obj.curr;
+                            }
+							window.location.href=url;
+						}
+                	}
+				});
+			});
+		</script>
+	</body>
+
+</html>

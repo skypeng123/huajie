@@ -1,0 +1,49 @@
+<?=$header?>
+
+		<div class="banner banner-3">
+			<div class="wrapper pr">
+				<ul class="layui-row layui-col-space1 menu-about">
+					<?php foreach($category_list as $cat):?>
+					<li class="layui-col-xs6 layui-col-md2">
+						<a href="<?=$cat['url']?>" <?php if($cat['id'] == $curr_cat['id']):?>class="actived"<?php endif;?>><?=$cat['name']?> </a>
+					</li>
+					<?php endforeach;?>
+				</ul>
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">新闻中心</h2>
+						<p class="f12 pr cW">NEWS</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <a href="<?=$site_url?>news"> 新闻中心</a> > <a href="<?=$curr_cat['url']?>"><b><?=$curr_cat['name']?></b></a></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="f24 tb tc pt60"><?=$info['title']?></h2>
+					<p class="pt30 tc zhaobiao-time"><span> 发布时间：<?=$info['date']?></span></p>
+					<div class="pt60 pb60">
+
+						<p class="f16 lh180"> <?=$info['content']?>
+						</p>
+
+					</div>
+					<div class="tc pt60" style="margin-bottom: 40px;">
+						<a class="pro-view-btn" <?php if(!empty($prev_record)): ?>href="<?=$prev_record['url']?>"<?php endif;?>><i class="layui-icon layui-icon-prev">	</i></a>
+						<a class="pro-view-btn" <?php if(!empty($next_record)): ?>href="<?=$next_record['url']?>"<?php endif;?>><i class="layui-icon layui-icon-next">	</i></a>
+
+					</div>
+				</div>
+
+			</section>
+
+			<?=$footer?>
+		</article>
+
+	</body>
+
+</html>

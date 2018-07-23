@@ -1,0 +1,86 @@
+<footer>
+	<div class="footer lh250">
+		<div class="wrapper">
+
+			<div class="layui-row">
+				<div class="layui-col-xs12 layui-col-md4">
+					<img lay-src="<?=$statics_url?>front/img/footer-logo.jpg" />
+				</div>
+				<div class="layui-col-xs12 layui-col-md3">
+					<h3 class="cW tb">快速导航</h3>
+					<ul class="layui-row">
+						<li class="layui-col-xs5">
+							<a href="/project" class="cW">参建项目</a>
+						</li>
+						<li class="layui-col-xs7">
+							<a href="/company" class="cW">集团概况</a>
+						</li>
+						<li class="layui-col-xs5">
+							<a href="/news" class="cW">新闻中心</a>
+						</li>
+						<li class="layui-col-xs7">
+							<a href="/job" class="cW">诚聘英才</a>
+						</li>
+						<li class="layui-col-xs5">
+							<a href="/bidding" class="cW">项目招标</a>
+						</li>
+						<li class="layui-col-xs7">
+							<a href="/company/contact" class="cW">联系我们</a>
+						</li>
+					</ul>
+				</div>
+				<div class="layui-col-xs12 layui-col-md3">
+					<h3 class="cW tb">联系方式</h3>
+					<ul>
+						<li class="cW">电话：0755-25779063</li>
+						<li class="cW">传真：0755-25779063</li>
+						<li class="cW">地址：深圳市南山区蛇口街道后海滨路与 海德路三道交汇处航天科技广场B座19楼
+						</li>
+					</ul>
+				</div>
+
+				<div class="layui-col-xs12 layui-col-md2 tr">
+					<img lay-src="<?=$statics_url?>front/img/weixin.jpg" width="140" />
+				</div>
+			</div>
+			<p>
+				免责声明：本站部分图片及信息来源于互联网，如有侵权请及时与我们联系。为保障原创者权益，我们将第一时间处理。
+			</p>
+
+		</div>
+	</div>
+	<div class="footerbar">
+		<p class="wrapper">
+			Copyright © 2018-2020 深圳市华杰建设集团有限公司 版权所有 备案号：粤ICP备17093854号-1
+		</p>
+	</div>
+</footer>
+<script src="<?=$statics_url?>front/layui/layui.js"></script>
+<script>
+	layui.use('layer', function() {
+		var $ = layui.$ //由于layer弹层依赖jQuery，所以可以直接得到
+			,layer = layui.layer;
+//				$(".nav ul li").click(function() { //导航点击
+//					$(".nav ul li a").removeClass("actived");
+//					$(this).children("a").addClass("actived");
+//				});
+		$(".nav i").click(function() { //显示或隐藏下方导航列表
+			$(".nav ul").slideToggle(100);
+		});
+		$('.pro .layui-col-md3').hover(function(){$(this).find('.layui-anim').show();},
+		function(){
+			$(".layui-anim").hide();
+		})
+	});
+	layui.use('flow', function(){
+	  var $ = layui.$ ;
+	  	  $(".data-list").find("img").each(function(k,v){
+		  $(this).attr("src",$(this).attr("lay-src"));
+	  });
+	  var flow = layui.flow;
+	  //当你执行这样一个方法时，即对页面中的全部带有lay-src的img元素开启了懒加载（当然你也可以指定相关img）
+	  flow.lazyimg(); 
+	});
+</script>
+<script src="<?=$site_url?>site/statistics"></script>
+

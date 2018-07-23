@@ -1,0 +1,132 @@
+<?=$header?>
+
+		<div class="banner banner-4">
+			<div class="wrapper pr">
+				<div class="banner-text">
+					<div class="title parent">
+						<h2 class="f30 tb cW">诚聘英才</h2>
+						<p class="f12 pr cW">RECRUITMENT</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<article class="index-content">
+			<div class="wrapper">
+				<div class="pt10 now-address"><img src="<?=$statics_url?>front/img/icpsp1_n_right_wz.jpg" /> <a href="<?=$site_url?>">首页</a> > <b>诚聘英才</b></div>
+			</div>
+			<section>
+				<div class="wrapper">
+					<h2 class="title-about pt60">用人理念</h2>
+					<div class="pt60 pb60">
+
+						<ul class="layui-row pt60  layui-col-space20">
+							<li class="layui-col-xs12 layui-col-md4">
+								<div class="man-1">
+									<h2 class="cW tc">海纳百川</h2>
+									<p class="pt10 cW">海纳百川，通达四方。以人为本，创新管理，华杰集团打造了一支高素质的职工队伍。一直以来，把人本管理作为企业之本、竞争之本、发展之本。通过开阔的事业发展空间、优良的人才成长环境、有效的激励监督机制，培养造就了一支优秀的管理团队和团结奉献、拼搏进取的员工队伍。</p>
+								</div>
+							</li>
+							<li class="layui-col-xs12 layui-col-md4">
+								<div class="man-2">
+									<h2 class="cW tc">唯才是举</h2>
+									<p class="pt10 cW">公司还将坚持“任人唯贤，德才兼备，唯才是举，知人善用”的用人原则，遵循“市场需求为导向，顾客满意为准则，管理技术为保障，团队协作为精神”的经营理念，将与客户精诚合作，共谋发展，共创辉煌。</p>
+								</div>
+							</li>
+							<li class="layui-col-xs12 layui-col-md4">
+								<div class="man-3">
+									<h2 class="cW tc">人才战略</h2>
+									<p class="pt10 cW">择才理念:注重品格、注重能力、注重潜质、注重默契；用人标准:忠于企业、忠于道义、谦学创造、风雨同舟；薪酬策略:科学评价，客观分配，遵循差异化和公平化；人才战略:知人善用，事业留人，待遇留人，团队留人。</p>
+								</div>
+							</li>
+
+						</ul>
+
+					</div>
+				</div>
+
+			</section>
+			<section class="bg-eee">
+				<div class="wrapper">
+					<h2 class="title-about pt60">诚聘</h2>
+					<div class="layui-form pt60 pb60">
+						<table class="layui-table">
+							<colgroup>
+								<col width="20%">
+								<col width="20%">
+								<col width="20%">
+								<col width="20%">
+								<col>
+							</colgroup>
+							<thead>
+							<tr>
+								<th>招聘职位</th>
+								<th>招聘部门</th>
+								<th>工作地点</th>
+								<th  style="text-align: center;">发布日期</th>
+								<th style="text-align: center;">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php foreach($job_list as $job): ?>
+							<tr class="man-list">
+								<td><?=$job['title']?></td>
+								<td><?=$job['department_name']?></td>
+								<td><?=$job['address']?></td>
+								<td class="tc"><?=$job['date']?></td>
+								<td class="tc">
+									<a href="<?=$job['url']?>" class="layui-btn layui-btn-normal">立即申请</a>
+								</td>
+							</tr>
+							<tr class="hidden">
+								<td colspan="5">
+									<?=$job['description']?>
+								</td>
+							</tr>
+							<?php endforeach;?>
+							</tbody>
+						</table>
+						<div id="page_html" class="tc pt20"></div>
+					</div>
+
+				</div>
+			</section>
+
+			<?=$footer?>
+		</article>
+		
+		<script>
+			layui.use('laypage', function() {
+				var laypage = layui.laypage;
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'page_html' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,limit: <?=$page_info['page_size']?>
+					,count: <?=$page_info['total_rows']?>
+                    ,curr: <?=$page_info['page_index']?>
+                    ,jump: function(obj, first){
+                    	if(!first){
+							url = window.location.href;
+                            if(url.indexOf("page/") != -1){
+                                url = url.replace(/page\/[0-9]/g,"page/"+obj.curr);
+                            }else{
+                                url = url+"/page/"+obj.curr;
+                            }
+							window.location.href=url;
+						}
+                	}
+				});
+			});
+            layui.use('layer', function() {
+                var $ = layui.$ //由于layer弹层依赖jQuery，所以可以直接得到
+                    ,
+                    layer = layui.layer;
+                $(".man-list").click(function() { //显示或隐藏下方导航列表
+                    $(this).next().slideToggle(100);
+                });
+            });
+		</script>
+	</body>
+
+</html>
